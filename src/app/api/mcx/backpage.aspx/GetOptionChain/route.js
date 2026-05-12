@@ -21,11 +21,18 @@ export async function POST(request) {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                    "Accept": "application/json, text/plain, */*",
+                    "Accept-Language": "en-US,en;q=0.5",
+                    "Connection": "keep-alive",
+                    "Referer": "https://www.mcxindia.com/market-data/option-chain",
+                    "Origin": "https://www.mcxindia.com",
                 },
                 body: JSON.stringify({
                     Commodity: commodity.toUpperCase(),
                     Expiry: expiry,
                 }),
+                cache: "no-store",
             }
         );
 

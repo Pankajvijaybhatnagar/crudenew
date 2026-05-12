@@ -5,7 +5,21 @@ const MCX_BASE = "https://www.mcxindia.com";
 export async function GET() {
     try {
         const response = await fetch(
-            `${MCX_BASE}/market-data/option-chain`
+            `${MCX_BASE}/market-data/option-chain`,
+            {
+                method: "GET",
+                headers: {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                    "Accept-Language": "en-US,en;q=0.5",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "Connection": "keep-alive",
+                    "Upgrade-Insecure-Requests": "1",
+                    "Cache-Control": "max-age=0",
+                    "Referer": "https://www.mcxindia.com/",
+                },
+                cache: "no-store",
+            }
         );
 
         if (!response.ok) {
@@ -14,7 +28,6 @@ export async function GET() {
 
         const html = await response.text();
 
-        // Extract vTick from HTML
         const vTickMatch = html.match(/vTick\s*=\s*(\[[\s\S]*?\]);/);
 
         if (!vTickMatch || !vTickMatch[1]) {
@@ -26,7 +39,6 @@ export async function GET() {
 
         const vTick = JSON.parse(vTickMatch[1]);
 
-        // Extract unique expiry dates for CRUDEOIL
         const expiries = [
             ...new Set(
                 vTick
